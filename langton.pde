@@ -1,20 +1,19 @@
-int x, y, d, i = 0;
-final int STEP = 1000; 
-boolean c, p;
+final int STEP = 100; 
+int x, y, d, i;
+boolean c;
 void setup() {
-  size(600, 600);
+  fullScreen();
   x=width/2;
   y=height/2;
-  textSize(16);
+  textSize(32);
   textAlign(CENTER);
   background(255);
+  stroke(#FF4040);
   loadPixels();
 }
-void mouseReleased() {
-  p=!p;
-}
 void draw() {
-  if (!p) {
+  if (keyPressed) exit();
+  if (mousePressed) {
     for (int j=0; j<STEP; j++) {
       c=(pixels[x+y*width]==color(0));
       d=(d+(c?-1:1)+4)%4;
@@ -23,10 +22,12 @@ void draw() {
       y=((y+(2-d)%2)+height)%height;
     }
     updatePixels();
-    set(x, y, #FF0000);
-    fill(#FFFFFF,220);
-    rect(10,10,130,30);
-    fill(#D06000);
-    text(""+(i+=STEP), 75, 30);
+    fill(#FFFFFF, 210);
+    rect(width/2-150, 5, 300, 40);
+    fill(#FF4040);
+    text(String.format("%,d", i+=STEP), width/2, 35);
+  } else {
+    line(x, 0, x, height);
+    line(0, y, width, y);
   }
 }
